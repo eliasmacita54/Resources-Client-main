@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <title>APP de Reserva de Recursos</title>
+</head>
+<body>
+  <div id="login-signup-form">
+    <h2>Entrar</h2>
+    <form id="login-form">
+      <label for="email">Email:</label>
+      <input type="text" id="email" required>
+      <br>
+      <label for="password">Palavra-passe:</label>
+      <input type="password" id="password" required>
+      <br>
+      <button type="submit">Entrar</button>
+    </form>
+    <h2>Registar</h2>
+    <form id="signup-form">
+      <label for="signup-username">Nome do Usuario:</label>
+      <input type="text" id="signup-username" required>
+      <br>
+      <label for="signup-email">Email:</label>
+      <input type="text" id="signup-email">
+      <br>
+      <label for="signup-password">Palavra-Passe:</label>
+      <input type="password" id="signup-password" required>
+      <br>
+      <button type="submit">Registar</button>
+    </form>
+  </div>
+
+  <div id="resource-list" style="display:none;">
+    <h2>Recursos</h2>
+    <p id="user-name"></p>
+    <label for="resources-dropdown">Selecionar recursos:</label>
+    <select id="resources-dropdown">
+      <option value="">--Selecionar recursos--</option>
+    </select>
+    <br>
+    <button id="reserve-button">Reservar</button>
+    <button id="delete-button">Apagar</button>
+
+    <h2>Recursos Reservados</h2>
+    <label for="reserved-resources-dropdown">Recursos Reservados:</label>
+    <select id="reserved-resources-dropdown">
+      <option value="">--nao tem recursos disponiveis--</option>
+    </select>
+    <br>
+    <button id="return-button">Devolver</button>
+
+    <h2>Criar Recursos</h2>
+    <form id="create-resource-form">
+      <label for="resource-name">Resource Name:</label>
+      <input type="text" id="resource-name" required>
+      <br>
+      <button type="submit">Criar</button>
+    </form>
+
+    <button id="logout-button">Sair</button>
+  </div>
+
+  <script src="./script/script.js"></script>
+</body>
+</html>
