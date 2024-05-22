@@ -1,9 +1,9 @@
-const LOGIN_API = "http://localhost:3000/login";
-const SIGNUP_API = "http://localhost:3000/CriarCliente";
-const SIGNUPRESOURCES_API = "http://localhost:3000/CriarRecursos";
-const DELETE_RESOURCE_API = "http://localhost:3000/DeleteRecursos";
-const RESOURCES_API = "http://localhost:3000/recursos";
-const WEBSOCKET_URL = "ws://localhost:3000/ws";
+const LOGIN_API = "https://resources-main-7.onrender.com/login";
+const SIGNUP_API = "https://resources-main-7.onrender.com/CriarCliente";
+const SIGNUPRESOURCES_API = "https://resources-main-7.onrender.com/CriarRecursos";
+const DELETE_RESOURCE_API = "https://resources-main-7.onrender.com/DeleteRecursos";
+const RESOURCES_API = "https://resources-main-7.onrender.com/recursos";
+const WEBSOCKET_URL = "ws://resources-main-7.onrender.com/ws";
 
 let jwtToken = null;
 let userName = null;
