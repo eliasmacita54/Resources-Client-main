@@ -23,8 +23,17 @@ body{font-family:Arial,sans-serif;margin:0;padding:0;display:flex;flex-direction
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
-  
+  #mainresources{
+    margin-top: 50px;
+  }
   .mt-5 {
     margin-top: 3rem !important;
+  }
+
+  .form-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   

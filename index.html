@@ -8,76 +8,81 @@
   <title>APP de Reserva de Recursos</title>
 </head>
 <body>
-  <div class="container mt-5">
-    <div id="login-signup-form" class="mb-5">
-      <div class="row">
-        <div class="col-md-6">
-          <h2>Entrar</h2>
-          <form id="login-form">
-            <div class="form-group">
-              <label for="email">Email:</label>
-              <input type="email" class="form-control" id="email" required>
-            </div>
-            <div class="form-group">
-              <label for="password">Palavra-passe:</label>
-              <input type="password" class="form-control" id="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Entrar</button>
-          </form>
-        </div>
-        <div class="col-md-6">
-          <h2>Registar</h2>
-          <form id="signup-form">
-            <div class="form-group">
-              <label for="signup-username">Nome do Usuario:</label>
-              <input type="text" class="form-control" id="signup-username" required>
-            </div>
-            <div class="form-group">
-              <label for="signup-email">Email:</label>
-              <input type="email" class="form-control" id="signup-email">
-            </div>
-            <div class="form-group">
-              <label for="signup-password">Palavra-Passe:</label>
-              <input type="password" class="form-control" id="signup-password" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Registar</button>
-          </form>
-        </div>
+  <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div id="form-container" class="w-50">
+      <div id="login-form" class="form-content">
+        <h2>Entrar</h2>
+        <form id="login-form-content">
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Palavra-passe:</label>
+            <input type="password" class="form-control" id="password" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Entrar</button>
+        </form>
+        <p class="mt-3">Não tem uma conta? <a href="#" id="show-signup">Registre-se</a></p>
+      </div>
+      <div id="signup-form" class="form-content" style="display: none;">
+        <h2>Registar</h2>
+        <form id="signup-form-content">
+          <div class="form-group">
+            <label for="signup-username">Nome do Usuario:</label>
+            <input type="text" class="form-control" id="signup-username" required>
+          </div>
+          <div class="form-group">
+            <label for="signup-email">Email:</label>
+            <input type="email" class="form-control" id="signup-email">
+          </div>
+          <div class="form-group">
+            <label for="signup-password">Palavra-Passe:</label>
+            <input type="password" class="form-control" id="signup-password" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Registar</button>
+        </form>
+        <p class="mt-3">Já tem uma conta? <a href="#" id="show-login">Entre</a></p>
       </div>
     </div>
+  </div>
 
-    <div id="resource-list" style="display:none;">
-      <h2>Recursos</h2>
-      <p id="user-name"></p>
-      <div class="form-group">
-        <label for="resources-dropdown">Selecionar recursos:</label>
-        <select id="resources-dropdown" class="form-control">
-          <option value="">--Selecionar recursos--</option>
-        </select>
-      </div>
-      <button id="reserve-button" class="btn btn-success">Reservar</button>
-      <button id="delete-button" class="btn btn-danger">Apagar</button>
-
-      <h2 class="mt-4">Recursos Reservados</h2>
-      <div class="form-group">
-        <label for="reserved-resources-dropdown">Recursos Reservados:</label>
-        <select id="reserved-resources-dropdown" class="form-control">
-          <option value="">--nao tem recursos disponiveis--</option>
-        </select>
-      </div>
-      <button id="return-button" class="btn btn-warning">Devolver</button>
-
-      <h2 class="mt-4">Criar Recursos</h2>
-      <form id="create-resource-form">
-        <div class="form-group">
-          <label for="resource-name">Resource Name:</label>
-          <input type="text" class="form-control" id="resource-name" required>
-        </div>
-        <button type="submit" class="btn btn-info">Criar</button>
-      </form>
-
-      <button id="logout-button" class="btn btn-secondary mt-4">Sair</button>
+  <div class="container d-flex justify-content-center align-items-center vh-100" id="mainresources" >
+    
+  <div id="resource-list" style="display:none;">
+    <h2>Recursos</h2>
+    <p id="user-name"></p>
+    <div class="form-group">
+      <label for="resources-dropdown">Selecionar recursos:</label>
+      <select id="resources-dropdown" class="form-control">
+        <option value="">--Selecionar recursos--</option>
+      </select>
     </div>
+    <button id="reserve-button" class="btn btn-success">Reservar</button>
+    <button id="delete-button" class="btn btn-danger">Apagar</button>
+
+    <h2 class="mt-4">Recursos Reservados</h2>
+    <div class="form-group">
+      <label for="reserved-resources-dropdown">Recursos Reservados:</label>
+      <select id="reserved-resources-dropdown" class="form-control">
+        <option value="">--não tem recursos disponiveis--</option>
+      </select>
+    </div>
+    <button id="return-button" class="btn btn-warning">Devolver</button>
+
+    <h2 class="mt-4">Criar Recursos</h2>
+    <form id="create-resource-form">
+      <div class="form-group">
+        <label for="resource-name">Resource Name:</label>
+        <input type="text" class="form-control" id="resource-name" required>
+      </div>
+      <button type="submit" class="btn btn-info">Criar</button>
+    </form>
+
+    <button id="logout-button" class="btn btn-secondary mt-4">Sair</button>
+  </div>
+
+
   </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

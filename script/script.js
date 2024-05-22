@@ -24,24 +24,44 @@ window.onload = () => {
     userId = storedUserId;
 
     document.getElementById("user-name").textContent = `Bem-vindo, ${userName}!`;
-    document.getElementById("login-signup-form").style.display = "none";
+    document.getElementById("form-container").style.display = "none";
     document.getElementById("resource-list").style.display = "block";
 
     fetchResources();
     connectWebSocket();
   } else {
-    document.getElementById("login-signup-form").style.display = "block";
+    document.getElementById("form-container").style.display = "block";
     document.getElementById("resource-list").style.display = "none";
   }
 
-  document.getElementById("login-form").onsubmit = handleLogin;
-  document.getElementById("signup-form").onsubmit = handleSignup;
+  document.getElementById("login-form-content").onsubmit = handleLogin;
+  document.getElementById("signup-form-content").onsubmit = handleSignup;
   document.getElementById("create-resource-form").onsubmit = createResource;
   document.getElementById("reserve-button").onclick = reserveResource;
   document.getElementById("delete-button").onclick = deleteResource;
   document.getElementById("return-button").onclick = returnResource;
   document.getElementById("logout-button").onclick = handleLogout;
 };
+
+document.addEventListener('DOMContentLoaded', function() {
+  const loginForm = document.getElementById('login-form');
+  const signupForm = document.getElementById('signup-form');
+  const showSignupLink = document.getElementById('show-signup');
+  const showLoginLink = document.getElementById('show-login');
+
+  showSignupLink.addEventListener('click', function(event) {
+    event.preventDefault();
+    loginForm.style.display = 'none';
+    signupForm.style.display = 'block';
+  });
+
+  showLoginLink.addEventListener('click', function(event) {
+    event.preventDefault();
+    signupForm.style.display = 'none';
+    loginForm.style.display = 'block';
+  });
+});
+
 
 function handleLogin(event) {
   event.preventDefault();
