@@ -5,35 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.skypack.dev/-/sakura.css@v1.3.1-VmH2VZPA3IgYndF0s0Cx/dist=es2020,mode=raw/css/sakura.css">
   <link rel="stylesheet" href="./css/style.css">
-  <title>APP de Reserva de Recursos</title>
+  <title>APP de Reserva de Recursos - Recursos</title>
 </head>
 <body>
-  <div id="login-signup-form">
-    <h2>Entrar</h2>
-    <form id="login-form">
-      <label for="email">Email:</label>
-      <input type="text" id="email" required>
-      <br>
-      <label for="password">Palavra-passe:</label>
-      <input type="password" id="password" required>
-      <br>
-      <button type="submit">Entrar</button>
-    </form>
-    <h2>Registar</h2>
-    <form id="signup-form">
-      <label for="signup-username">Nome do Usuario:</label>
-      <input type="text" id="signup-username" required>
-      <br>
-      <label for="signup-email">Email:</label>
-      <input type="text" id="signup-email">
-      <br>
-      <label for="signup-password">Palavra-Passe:</label>
-      <input type="password" id="signup-password" required>
-      <br>
-      <button type="submit">Registar</button>
-    </form>
-  </div>
-
   <div id="resource-list" style="display:none;">
     <h2>Recursos</h2>
     <p id="user-name"></p>
@@ -43,7 +17,6 @@
     </select>
     <br>
     <button id="reserve-button">Reservar</button>
-    
 
     <h2>Recursos Reservados</h2>
     <label for="reserved-resources-dropdown">Recursos Reservados:</label>
@@ -61,19 +34,6 @@
       <br>
       <button type="submit">Criar</button>
     </form>
-
-    <h3>Historical Operations</h3>
-      <table id="history-table">
-        <thead>
-          <tr>
-            <th>Usuário</th>
-            <th>Recurso</th>
-            <th>Ação</th>
-            <th>Data</th>
-          </tr>
-        </thead>
-        <tbody id="history-entries"></tbody>
-      </table>
 
     <button id="logout-button">Sair</button>
   </div>

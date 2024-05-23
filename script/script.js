@@ -1,9 +1,10 @@
-const LOGIN_API = "https://resources-main-7.onrender.com/login";
-const SIGNUP_API = "https://resources-main-7.onrender.com/CriarCliente";
-const SIGNUPRESOURCES_API = "https://resources-main-7.onrender.com/CriarRecursos";
-const DELETE_RESOURCE_API = "https://resources-main-7.onrender.com/DeleteRecursos";
-const RESOURCES_API = "https://resources-main-7.onrender.com/recursos";
-const WEBSOCKET_URL = "https://resources-main-7.onrender.com/ws";
+const LOGIN_API = "http://localhost:3000/login";
+const SIGNUP_API = "http://localhost:3000/CriarCliente";
+const SIGNUPRESOURCES_API = "http://localhost:3000/CriarRecursos";
+const DELETE_RESOURCE_API = "http://localhost:3000/DeleteRecursos";
+const RESOURCES_API = "http://localhost:3000/recursos";
+const WEBSOCKET_URL = "http://localhost:3000/ws";
+const HISTORY_API = "http://localhost:3000/historico"
 
 let jwtToken = null;
 let userName = null;
@@ -28,6 +29,7 @@ window.onload = () => {
     document.getElementById("resource-list").style.display = "block";
 
     fetchResources();
+    fetchHistory();
     connectWebSocket();
   } else {
     document.getElementById("login-signup-form").style.display = "block";
@@ -42,6 +44,51 @@ window.onload = () => {
   document.getElementById("return-button").onclick = returnResource;
   document.getElementById("logout-button").onclick = handleLogout;
 };
+
+function fetchHistory() {
+  fetch(HISTORY_API, {
+    headers: { Authorization: `Bearer ${jwtToken}` },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.error) {
+        alert(data.error);
+        return;
+      }
+      populateHistory(data.historico);
+    })
+    .catch((error) => {
+      console.error("Error fetching history:", error);
+      alert("Failed to fetch history");
+    });
+}
+function populateHistory(history) {
+  const historyTableBody = document.getElementById("history-entries");
+  historyTableBody.innerHTML = "";
+
+  history.forEach((entry) => {
+    const row = document.createElement("tr");
+
+    const dateCell = document.createElement("td");
+    dateCell.textContent = entry.dataHora || "N/A"; // Incluindo a data/hora
+    row.appendChild(dateCell);
+
+    const userCell = document.createElement("td");
+    userCell.textContent = entry.cliente ? entry.cliente.nome : "N/A"; // Incluindo o nome do usuário
+    row.appendChild(userCell);
+
+    const resourceCell = document.createElement("td");
+    resourceCell.textContent = entry.recurso ? entry.recurso.nome : "N/A"; // Incluindo o nome do recurso
+    row.appendChild(resourceCell);
+
+    const actionCell = document.createElement("td");
+    actionCell.textContent = entry.operacao || "N/A"; // Incluindo a operação
+    row.appendChild(actionCell);
+
+    historyTableBody.appendChild(row);
+  });
+}
+
 
 function handleLogin(event) {
   event.preventDefault();
@@ -58,13 +105,13 @@ function handleLogin(event) {
     .then((response) => response.json())
     .then((data) => {
       if (data.error) {
-        alert("Falha no login: " + data.error);
+        alert("Login failed: " + data.error);
         return;
       }
       jwtToken = data.token;
       userName = data.userName;
       userId = data.userId;
-      console.log("Login bem-sucedido! Token:", jwtToken);
+      console.log("Login successful! Token:", jwtToken);
 
       localStorage.setItem('jwtToken', jwtToken);
       localStorage.setItem('userName', userName);
@@ -74,11 +121,12 @@ function handleLogin(event) {
       document.getElementById("login-signup-form").style.display = "none";
       document.getElementById("resource-list").style.display = "block";
       fetchResources();
+      fetchHistory();
       connectWebSocket();
     })
     .catch((error) => {
-      console.error("Erro durante o login:", error);
-      alert("Falha no login!");
+      console.error("Error during login:", error);
+      alert("Login failed!");
     });
 }
 
@@ -98,14 +146,14 @@ function handleSignup(event) {
     .then((response) => response.json())
     .then((data) => {
       if (data.error) {
-        alert("Falha no registro: " + data.error);
+        alert("Signup failed: " + data.error);
         return;
       }
-      alert("Registro bem-sucedido! Por favor, faça login.");
+      alert("Signup successful! Please log in.");
     })
     .catch((error) => {
-      console.error("Erro durante o registro:", error);
-      alert("Falha no registro!");
+      console.error("Error during signup:", error);
+      alert("Signup failed!");
     });
 }
 
@@ -122,8 +170,8 @@ function fetchResources() {
       reservedResourcesDropdown.innerHTML = "";
 
       if (!recursos || !Array.isArray(recursos)) {
-        console.error("Formato de recursos inválido:", recursos);
-        alert("Falha no retorno de Recursos: Formato de recursos inválido");
+        console.error("Invalid resources format:", recursos);
+        alert("Failed to fetch resources: Invalid resources format");
         return;
       }
 
@@ -140,7 +188,7 @@ function fetchResources() {
       if (reservedResources.length === 0) {
         const option = document.createElement("option");
         option.value = "";
-        option.textContent = "Nenhum recurso reservado";
+        option.textContent = "No reserved resources";
         reservedResourcesDropdown.appendChild(option);
         document.getElementById("return-button").disabled = true;
       } else {
@@ -154,8 +202,8 @@ function fetchResources() {
       }
     })
     .catch((error) => {
-      console.error("Erro ao buscar recursos:", error);
-      alert("Falha ao buscar recursos!");
+      console.error("Error fetching resources:", error);
+      alert("Failed to fetch resources!");
     });
 }
 
@@ -164,7 +212,7 @@ function reserveResource() {
   const resourceId = resourceDropdown.value;
 
   if (!resourceId) {
-    alert("Por favor, selecione um recurso para reservar!");
+    alert("Please select a resource to reserve!");
     return;
   }
 
@@ -179,18 +227,18 @@ function reserveResource() {
       if (!response.ok) {
         return response.json().then((data) => {
           console.error("Server response:", data);
-          throw new Error(data.error || "Falha ao reservar o recurso");
+          throw new Error(data.error || "Failed to reserve resource");
         });
       }
       return response.json();
     })
     .then((data) => {
-      alert("Recurso reservado com sucesso!");
+      alert("Resource reserved successfully!");
       fetchResources();
       websocket.send(JSON.stringify({ action: "update" }));
     })
     .catch((error) => {
-      console.error("Erro ao reservar recurso:", error);
+      console.error("Error reserving resource:", error);
       alert(error.message);
     });
 }
@@ -200,7 +248,7 @@ function returnResource() {
   const resourceId = reservedResourcesDropdown.value;
 
   if (!resourceId) {
-    alert("Por favor, selecione um recurso reservado para devolver!");
+    alert("Please select a reserved resource to return!");
     return;
   }
 
@@ -215,18 +263,18 @@ function returnResource() {
       if (!response.ok) {
         return response.json().then((data) => {
           console.error("Server response:", data);
-          throw new Error(data.error || "Falha ao devolver o recurso");
+          throw new Error(data.error || "Failed to return resource");
         });
       }
       return response.json();
     })
     .then((data) => {
-      alert("Recurso devolvido com sucesso!");
+      alert("Resource returned successfully!");
       fetchResources();
       websocket.send(JSON.stringify({ action: "update" }));
     })
     .catch((error) => {
-      console.error("Erro ao devolver recurso:", error);
+      console.error("Error returning resource:", error);
       alert(error.message);
     });
 }
@@ -236,7 +284,7 @@ function deleteResource() {
   const resourceId = resourceDropdown.value;
 
   if (!resourceId) {
-    alert("Por favor, selecione um recurso para apagar!");
+    alert("Please select a resource to delete!");
     return;
   }
 
@@ -250,7 +298,7 @@ function deleteResource() {
     .then((response) => {
       if (!response.ok) {
         return response.json().then(data => {
-          const error = new Error(data.error || 'Erro ao apagar o recurso');
+          const error = new Error(data.error || 'Failed to delete resource');
           error.details = data;
           throw error;
         });
@@ -258,13 +306,13 @@ function deleteResource() {
       return response.json();
     })
     .then(data => {
-      alert("Recurso apagado com sucesso!");
+      alert("Resource deleted successfully!");
       fetchResources();
       websocket.send(JSON.stringify({ action: "update" }));
     })
     .catch(error => {
-      console.error("Erro ao apagar recurso:", error);
-      alert(error.details ? error.details.message : "Erro ao apagar recurso");
+      console.error("Error deleting resource:", error);
+      alert(error.details ? error.details.message : "Failed to delete resource");
     });
 }
 function createResource(event) {
@@ -284,7 +332,7 @@ function createResource(event) {
     .then((response) => {
       if (!response.ok) {
         return response.json().then(data => {
-          const error = new Error(data.error || 'Erro ao criar recurso');
+          const error = new Error(data.error || 'Failed to create resource');
           error.details = data;
           throw error;
         });
@@ -292,14 +340,14 @@ function createResource(event) {
       return response.json();
     })
     .then((data) => {
-      alert("Recurso criado com sucesso!");
+      alert("Resource created successfully!");
       fetchResources();
       websocket.send(JSON.stringify({ action: "update" }));
       document.getElementById("create-resource-form").reset();
     })
     .catch((error) => {
-      console.error("Erro durante a criação do recurso:", error);
-      alert(error.details ? error.details.error : "Erro durante a criação do recurso");
+      console.error("Error creating resource:", error);
+      alert(error.details ? error.details.error : "Failed to create resource");
     });
 }
 
@@ -331,6 +379,7 @@ function connectWebSocket() {
   websocket.onmessage = (event) => {
     console.log("WebSocket message received:", event.data);
     fetchResources();
+    fetchHistory();
   };
 
   websocket.onclose = () => {
