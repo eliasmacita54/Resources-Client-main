@@ -51,6 +51,7 @@ window.onload = () => {
   document.getElementById("password-reset-form").onsubmit = handlePasswordReset;
   document.getElementById("verify-otp-form").onsubmit = handleVerifyOtp;
   document.getElementById("reset-password-form").onsubmit = handleResetPassword;
+  
 };
 
 // Existing functions (fetchResources, fetchHistory, etc.)
