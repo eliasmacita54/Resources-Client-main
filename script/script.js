@@ -1,10 +1,10 @@
-const LOGIN_API = "https://resources-main-9.onrender.com/login";
-const SIGNUP_API = "https://resources-main-9.onrender.com/CriarCliente";
-const SIGNUPRESOURCES_API = "https://resources-main-9.onrender.com/CriarRecursos";
-const DELETE_RESOURCE_API = "https://resources-main-9.onrender.com/DeleteRecursos";
-const RESOURCES_API = "https://resources-main-9.onrender.com/recursos";
-const WEBSOCKET_URL = "https://resources-main-9.onrender.com/ws";
-const HISTORY_API = "https://resources-main-9.onrender.com/historico"
+const LOGIN_API = "http://localhost:3000/login";
+const SIGNUP_API = "http://localhost:3000/CriarCliente";
+const SIGNUPRESOURCES_API = "http://localhost:3000/CriarRecursos";
+const DELETE_RESOURCE_API = "http://localhost:3000/DeleteRecursos";
+const RESOURCES_API = "http://localhost:3000/recursos";
+const WEBSOCKET_URL = "http://localhost:3000/ws";
+const HISTORY_API = "http://localhost:3000/historico"
 
 let jwtToken = null;
 let userName = null;
@@ -59,7 +59,7 @@ function fetchHistory() {
     })
     .catch((error) => {
       console.error("Error fetching history:", error);
-      alert("Failed to fetch history");
+      //alert("Failed to fetch history");
     });
 }
 function populateHistory(history) {
@@ -151,7 +151,7 @@ function handleSignup(event) {
         alert("Signup failed: " + data.error);
         return;
       }
-      alert("Signup successful! Please log in.");
+      alert("Registo feito com sucesso!");
     })
     .catch((error) => {
       console.error("Error during signup:", error);
@@ -205,7 +205,7 @@ function fetchResources() {
     })
     .catch((error) => {
       console.error("Error fetching resources:", error);
-      alert("Failed to fetch resources!");
+      //alert("Failed to fetch resources!");
     });
 }
 
