@@ -1,10 +1,10 @@
-const LOGIN_API = "https://resources-main-7.onrender.com/login";
-const SIGNUP_API = "https://resources-main-7.onrender.com/CriarCliente";
-const SIGNUPRESOURCES_API = "https://resources-main-7.onrender.com/CriarRecursos";
-const DELETE_RESOURCE_API = "https://resources-main-7.onrender.com/DeleteRecursos";
-const RESOURCES_API = "https://resources-main-7.onrender.com/recursos";
-const WEBSOCKET_URL = "https://resources-main-7.onrender.com/ws";
-const HISTORY_API = "https://resources-main-7.onrender.com/historico"
+const LOGIN_API = "http://localhost:3000/login";
+const SIGNUP_API = "http://localhost:3000/CriarCliente";
+const SIGNUPRESOURCES_API = "http://localhost:3000/CriarRecursos";
+const DELETE_RESOURCE_API = "http://localhost:3000/DeleteRecursos";
+const RESOURCES_API = "http://localhost:3000/recursos";
+const WEBSOCKET_URL = "http://localhost:3000/ws";
+const HISTORY_API = "http://localhost:3000/historico"
 
 let jwtToken = null;
 let userName = null;
@@ -69,9 +69,7 @@ function populateHistory(history) {
   history.forEach((entry) => {
     const row = document.createElement("tr");
 
-    const dateCell = document.createElement("td");
-    dateCell.textContent = entry.dataHora || "N/A"; // Incluindo a data/hora
-    row.appendChild(dateCell);
+    
 
     const userCell = document.createElement("td");
     userCell.textContent = entry.cliente ? entry.cliente.nome : "N/A"; // Incluindo o nome do usuário
@@ -84,6 +82,10 @@ function populateHistory(history) {
     const actionCell = document.createElement("td");
     actionCell.textContent = entry.operacao || "N/A"; // Incluindo a operação
     row.appendChild(actionCell);
+
+    const dateCell = document.createElement("td");
+    dateCell.textContent = entry.dataHora || "N/A"; // Incluindo a data/hora
+    row.appendChild(dateCell);
 
     historyTableBody.appendChild(row);
   });
