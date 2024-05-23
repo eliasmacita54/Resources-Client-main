@@ -267,7 +267,6 @@ function deleteResource() {
       alert(error.details ? error.details.message : "Erro ao apagar recurso");
     });
 }
-
 function createResource(event) {
   event.preventDefault();
   const resourceName = document.getElementById("resource-name").value;
@@ -282,21 +281,28 @@ function createResource(event) {
     },
     body: JSON.stringify(resourceData),
   })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.error) {
-        alert("Falha na criação do recurso: " + data.error);
-        return;
+    .then((response) => {
+      if (!response.ok) {
+        return response.json().then(data => {
+          const error = new Error(data.error || 'Erro ao criar recurso');
+          error.details = data;
+          throw error;
+        });
       }
+      return response.json();
+    })
+    .then((data) => {
       alert("Recurso criado com sucesso!");
       fetchResources();
       websocket.send(JSON.stringify({ action: "update" }));
+      document.getElementById("create-resource-form").reset();
     })
     .catch((error) => {
       console.error("Erro durante a criação do recurso:", error);
-      alert("Falha na criação do recurso!");
+      alert(error.details ? error.details.error : "Erro durante a criação do recurso");
     });
 }
+
 
 function handleLogout() {
   jwtToken = null;
