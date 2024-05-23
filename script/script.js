@@ -69,9 +69,6 @@ function populateHistory(history) {
   history.forEach((entry) => {
     const row = document.createElement("tr");
 
-    const dateCell = document.createElement("td");
-    dateCell.textContent = entry.dataHora || "N/A"; // Incluindo a data/hora
-    row.appendChild(dateCell);
 
     const userCell = document.createElement("td");
     userCell.textContent = entry.cliente ? entry.cliente.nome : "N/A"; // Incluindo o nome do usuário
@@ -84,6 +81,11 @@ function populateHistory(history) {
     const actionCell = document.createElement("td");
     actionCell.textContent = entry.operacao || "N/A"; // Incluindo a operação
     row.appendChild(actionCell);
+
+    
+    const dateCell = document.createElement("td");
+    dateCell.textContent = entry.dataHora || "N/A"; // Incluindo a data/hora
+    row.appendChild(dateCell);
 
     historyTableBody.appendChild(row);
   });
