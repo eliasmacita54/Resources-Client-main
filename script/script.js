@@ -172,8 +172,8 @@ function fetchResources() {
       reservedResourcesDropdown.innerHTML = "";
 
       if (!recursos || !Array.isArray(recursos)) {
-        console.error("Invalid resources format:", recursos);
-        alert("Failed to fetch resources: Invalid resources format");
+       console.error("Invalid resources format:", recursos);
+        //alert("Failed to fetch resources: Invalid resources format");
         return;
       }
 
