@@ -4,7 +4,10 @@ const SIGNUPRESOURCES_API = "http://localhost:3000/CriarRecursos";
 const DELETE_RESOURCE_API = "http://localhost:3000/DeleteRecursos";
 const RESOURCES_API = "http://localhost:3000/recursos";
 const WEBSOCKET_URL = "http://localhost:3000/ws";
-const HISTORY_API = "http://localhost:3000/historico"
+const HISTORY_API = "http://localhost:3000/historico";
+const RECUPERAR_SENHA_API = "http://localhost:3000/RecuperarSenha";
+const VERIFY_OTP_API = "http://localhost:3000/VerifyOtp";
+const RESET_PASSWORD_API = "http://localhost:3000/ResetPassword";
 
 let jwtToken = null;
 let userName = null;
@@ -43,7 +46,95 @@ window.onload = () => {
   document.getElementById("delete-button").onclick = deleteResource;
   document.getElementById("return-button").onclick = returnResource;
   document.getElementById("logout-button").onclick = handleLogout;
+
+  // Password reset event handlers
+  document.getElementById("password-reset-form").onsubmit = handlePasswordReset;
+  document.getElementById("verify-otp-form").onsubmit = handleVerifyOtp;
+  document.getElementById("reset-password-form").onsubmit = handleResetPassword;
 };
+
+// Existing functions (fetchResources, fetchHistory, etc.)
+
+function handlePasswordReset(event) {
+  event.preventDefault();
+  const email = document.getElementById("reset-email").value;
+
+  fetch(RECUPERAR_SENHA_API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.error) {
+        alert("Failed to send OTP: " + data.error);
+        return;
+      }
+      alert("OTP sent to your email!");
+
+      document.getElementById("verify-otp-form").style.display = "block";
+      document.getElementById("reset-password-form").style.display = "none";
+    })
+    .catch((error) => {
+      console.error("Error during password reset:", error);
+    });
+}
+
+function handleVerifyOtp(event) {
+  event.preventDefault();
+  const email = document.getElementById("verify-email").value;
+  const otp = document.getElementById("otp").value;
+
+  fetch(VERIFY_OTP_API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, otp }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.error) {
+        alert("OTP verification failed: " + data.error);
+        return;
+      }
+      alert("OTP verified! You can now reset your password.");
+
+      document.getElementById("reset-password-form").style.display = "block";
+      document.getElementById("verify-otp-form").style.display = "none";
+    })
+    .catch((error) => {
+      console.error("Error during OTP verification:", error);
+    });
+}
+function handleResetPassword(event) {
+  event.preventDefault();
+  const email = document.getElementById("reset-email-final").value;
+  const newPassword = document.getElementById("new-password").value;
+
+  console.log("Resetting password with email:", email, "and new password:", newPassword);
+
+  fetch(RESET_PASSWORD_API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password: newPassword }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        return response.json().then(data => {
+          throw new Error(data.error || 'Failed to reset password');
+        });
+      }
+      return response.json();
+    })
+    .then((data) => {
+      alert("Password reset successfully! You can now log in with your new password.");
+      document.getElementById("reset-password-form").style.display = "none";
+    })
+    .catch((error) => {
+      console.error("Error during password reset:", error);
+      alert("Password reset failed: " + error.message);
+    });
+}
+
 
 function fetchHistory() {
   fetch(HISTORY_API, {
@@ -59,17 +150,15 @@ function fetchHistory() {
     })
     .catch((error) => {
       console.error("Error fetching history:", error);
-      //alert("Failed to fetch history");
     });
 }
+
 function populateHistory(history) {
   const historyTableBody = document.getElementById("history-entries");
   historyTableBody.innerHTML = "";
 
   history.forEach((entry) => {
     const row = document.createElement("tr");
-
-    
 
     const userCell = document.createElement("td");
     userCell.textContent = entry.cliente ? entry.cliente.nome : "N/A"; // Incluindo o nome do usuário
@@ -90,7 +179,6 @@ function populateHistory(history) {
     historyTableBody.appendChild(row);
   });
 }
-
 
 function handleLogin(event) {
   event.preventDefault();
@@ -128,7 +216,6 @@ function handleLogin(event) {
     })
     .catch((error) => {
       console.error("Error during login:", error);
-      alert("Login failed!");
     });
 }
 
@@ -155,7 +242,6 @@ function handleSignup(event) {
     })
     .catch((error) => {
       console.error("Error during signup:", error);
-      alert("Signup failed!");
     });
 }
 
@@ -173,7 +259,6 @@ function fetchResources() {
 
       if (!recursos || !Array.isArray(recursos)) {
        console.error("Invalid resources format:", recursos);
-        //alert("Failed to fetch resources: Invalid resources format");
         return;
       }
 
@@ -205,7 +290,6 @@ function fetchResources() {
     })
     .catch((error) => {
       console.error("Error fetching resources:", error);
-      //alert("Failed to fetch resources!");
     });
 }
 
@@ -317,6 +401,7 @@ function deleteResource() {
       alert(error.details ? error.details.message : "Failed to delete resource");
     });
 }
+
 function createResource(event) {
   event.preventDefault();
   const resourceName = document.getElementById("resource-name").value;
@@ -352,7 +437,6 @@ function createResource(event) {
       alert(error.details ? error.details.error : "Failed to create resource");
     });
 }
-
 
 function handleLogout() {
   jwtToken = null;
