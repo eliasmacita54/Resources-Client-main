@@ -3,7 +3,7 @@ const SIGNUP_API = "https://resources-main-7.onrender.com/CriarCliente";
 const SIGNUPRESOURCES_API = "https://resources-main-7.onrender.com/CriarRecursos";
 const DELETE_RESOURCE_API = "https://resources-main-7.onrender.com/DeleteRecursos";
 const RESOURCES_API = "https://resources-main-7.onrender.com/recursos";
-const WEBSOCKET_URL = "ws://resources-main-7.onrender.com/ws";
+const WEBSOCKET_URL = "https://resources-main-7.onrender.com/ws";
 
 let jwtToken = null;
 let userName = null;
@@ -232,7 +232,7 @@ function returnResource() {
 }
 
 function deleteResource() {
-  const resourceDropdown = document.getElementById("resources-dropdown");
+  const resourceDropdown = document.getElementById("reserved-resources-dropdown");
   const resourceId = resourceDropdown.value;
 
   if (!resourceId) {
