@@ -3,111 +3,257 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.skypack.dev/-/sakura.css@v1.3.1-VmH2VZPA3IgYndF0s0Cx/dist=es2020,mode=raw/css/sakura.css">
-  <link rel="stylesheet" href="./css/style.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
   <title>APP de Reserva de Recursos</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #ffffff;
+    }
+
+    .form-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      display: none;
+    }
+    #history-table{
+      color:#FFF;
+    }
+
+    .form-section.active {
+      display: flex;
+    }
+
+    .card {
+      background-color: #1f1f1f;
+      border: none;
+    }
+
+    .card-title {
+      color: #c0c0c0;
+    }
+
+    .form-group label {
+      color: #c0c0c0;
+    }
+
+    .form-control {
+      background-color: #343434;
+      border-color: #343434;
+      color: #fff;
+    }
+
+    .form-control:focus {
+      background-color: #454545;
+      border-color: #454545;
+      color: #ffffff;
+    }
+
+    .mt-5 {
+      margin-top: 50px;
+    }
+  </style>
 </head>
 <body>
-  <div id="login-signup-form">
-    <h2>Entrar</h2>
-    <form id="login-form">
-      <label for="email">Email:</label>
-      <input type="text" id="email" required>
-      <br>
-      <label for="password">Palavra-passe:</label>
-      <input type="password" id="password" required>
-      <br>
-      <button type="submit">Entrar</button>
-    </form>
-    <h2>Registar</h2>
-    <form id="signup-form">
-      <label for="signup-username">Nome do Usuario:</label>
-      <input type="text" id="signup-username" required>
-      <br>
-      <label for="signup-email">Email:</label>
-      <input type="email" id="signup-email">
-      <br>
-      <label for="signup-password">Palavra-Passe:</label>
-      <input type="password" id="signup-password" required>
-      <br>
-      <button type="submit">Registar</button>
-    </form>
+  <div class="container mt-5" id="login-signup-form">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title"><i class="fas fa-sign-in-alt"></i> Entrar</h2>
+        <form id="login-form" class="form-section active">
+          <div class="form-group">
+            <label for="email"><i class="fas fa-envelope"></i> Email:</label>
+            <input type="email" class="form-control" id="email" required>
+          </div>
+          <div class="form-group">
+            <label for="password"><i class="fas fa-lock"></i> Palavra-passe:</label>
+            <input type="password" class="form-control" id="password" required>
+          </div>
+          <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+          <p class="mt-3">
+            <a href="#" id="show-signup">Registar</a> | 
+            <a href="#" id="show-password-reset">Recuperar Senha</a>
+          </p>
+        </form>
 
-    <h2>Recuperar Senha</h2>
-    <form id="password-reset-form">
-      <label for="reset-email">Email:</label>
-      <input type="email" id="reset-email" required>
-      <br>
-      <button type="submit">Recuperar Senha</button>
-    </form>
+        <form id="signup-form" class="form-section">
+          <div class="form-group">
+            <label for="signup-username">Nome do Usuario:</label>
+            <input type="text" class="form-control" id="signup-username" required>
+          </div>
+          <div class="form-group">
+            <label for="signup-email">Email:</label>
+            <input type="email" class="form-control" id="signup-email" required>
+          </div>
+          <div class="form-group">
+            <label for="signup-password">Palavra-Passe:</label>
+            <input type="password" class="form-control" id="signup-password" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Registar</button>
+          <p class="mt-3"><a href="#" id="show-login">Já tem conta? Entrar</a></p>
+        </form>
 
-    <h2>Verificar OTP</h2>
-    <form id="verify-otp-form" style="display:none;">
-      <label for="verify-email">Email:</label>
-      <input type="email" id="verify-email" required>
-      <br>
-      <label for="otp">OTP:</label>
-      <input type="text" id="otp" required>
-      <br>
-      <button type="submit">Verificar OTP</button>
-    </form>
+        <form id="password-reset-form" class="form-section">
+          <div class="form-group">
+            <label for="reset-email">Email:</label>
+            <input type="email" class="form-control" id="reset-email" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Recuperar Senha</button>
+        </form>
 
-    <h2>Resetar Palavra-passe</h2>
-    <form id="reset-password-form" style="display:none;">
-      <label for="reset-email-final">Email:</label>
-      <input type="email" id="reset-email-final" required>
-      <br>
-      <label for="new-password">Nova Palavra-passe:</label>
-      <input type="password" id="new-password" required>
-      <br>
-      <button type="submit">Resetar Palavra-passe</button>
-    </form>
+        <form id="verify-otp-form" class="form-section">
+          <div class="form-group">
+            <label for="verify-email">Email:</label>
+            <input type="email" class="form-control" id="verify-email" required>
+          </div>
+          <div class="form-group">
+            <label for="otp">OTP:</label>
+            <input type="text" class="form-control" id="otp" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Verificar OTP</button>
+        </form>
+
+        <form id="reset-password-form" class="form-section">
+          <div class="form-group">
+            <label for="reset-email-final">Email:</label>
+            <input type="email" class="form-control" id="reset-email-final" required>
+          </div>
+          <div class="form-group">
+            <label for="new-password">Nova Palavra-passe:</label>
+            <input type="password" class="form-control" id="new-password" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Resetar Palavra-passe</button>
+        </form>
+      </div>
+    </div>
   </div>
 
-  <div id="resource-list" style="display:none;">
+  <div class="container mt-5" id="resource-list" style="display:none;">
     <h2>Recursos</h2>
     <p id="user-name"></p>
-    <label for="resources-dropdown">Selecionar recursos:</label>
-    <select id="resources-dropdown">
-      <option value="">--Selecionar recursos--</option>
-    </select>
-    <br>
-    <button id="reserve-button">Reservar</button>
-    
+    <div class="form-group">
+      <label for="resources-dropdown">Selecionar recursos:</label>
+      <select id="resources-dropdown" class="form-control">
+        <option value="">--Selecionar recursos--</option>
+      </select>
+    </div>
+    <button id="reserve-button" class="btn btn-primary">Reservar</button>
 
-    <h2>Recursos Reservados</h2>
-    <label for="reserved-resources-dropdown">Recursos Reservados:</label>
-    <select id="reserved-resources-dropdown">
-      <option value="">--nao tem recursos disponiveis--</option>
-    </select>
-    <br>
-    <button id="return-button">Devolver</button>
-    <button id="delete-button">Apagar</button>
+    <h2 class="mt-4">Recursos Reservados</h2>
+    <div class="form-group">
+      <label for="reserved-resources-dropdown">Recursos Reservados:</label>
+      <select id="reserved-resources-dropdown" class="form-control">
+        <option value="">--nao tem recursos disponiveis--</option>
+      </select>
+    </div>
+    <button id="return-button" class="btn btn-secondary">Devolver</button>
+    <button id="delete-button" class="btn btn-danger">Apagar</button>
 
-    <h2>Criar Recursos</h2>
+    <h2 class="mt-4">Criar Recursos</h2>
     <form id="create-resource-form">
-      <label for="resource-name">Resource Name:</label>
-      <input type="text" id="resource-name" required>
-      <br>
-      <button type="submit">Criar</button>
+      <div class="form-group">
+        <label for="resource-name">Nome do Recurso:</label>
+        <input type="text" class="form-control" id="resource-name" required>
+      </div>
+      <button type="submit" class="btn btn-success">Criar</button>
     </form>
 
-    <h3>Historico</h3>
-      <table id="history-table">
-        <thead>
-          <tr>
-            <th>Usuário</th>
-            <th>Recurso</th>
-            <th>Ação</th>
-            <th>Data</th>
-          </tr>
-        </thead>
-        <tbody id="history-entries"></tbody>
-      </table>
+    <h2 class="mt-4">Upload de Arquivo</h2>
+    <form id="upload-file-form" enctype="multipart/form-data">
+      <div class="form-group">
+        <input type="file" id="file-input" name="file" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
 
-    <button id="logout-button">Sair</button>
+    <h3 class="mt-4">Historico</h3>
+    <table class="table" id="history-table">
+      <thead>
+        <tr>
+          <th>Utilizador</th>
+          <th>Recurso</th>
+          <th>Ação</th>
+          <th>Data</th>
+        </tr>
+      </thead>
+      <tbody id="history-entries"></tbody>
+    </table>
+
+    <button id="logout-button" class="btn btn-danger">Sair</button>
   </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Switch between forms
+    document.getElementById('show-signup').addEventListener('click', function () {
+      switchForm('signup-form');
+    });
+    document.getElementById('show-login').addEventListener('click', function () {
+      switchForm('login-form');
+    });
+    document.getElementById('show-password-reset').addEventListener('click', function () {
+      switchForm('password-reset-form');
+    });
 
-  <script src="./script/script.js"></script>
+    // Handle password reset form submission
+    document.getElementById('password-reset-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      switchForm('verify-otp-form');
+    });
+
+    // Handle OTP verification form submission
+    document.getElementById('verify-otp-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      switchForm('reset-password-form');
+    });
+
+    // Example login success handler to show resource list
+    document.getElementById('login-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      document.getElementById('login-signup-form').style.display = 'none';
+      document.getElementById('resource-list').style.display = 'block';
+    });
+
+    function switchForm(formId) {
+      document.querySelectorAll('.form-section').forEach(function (form) {
+        form.classList.remove('active');
+      });
+      document.getElementById(formId).classList.add('active');
+    }
+
+    // Handle file upload
+    document.getElementById('upload-file-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const fileInput = document.getElementById('file-input');
+      const formData = new FormData();
+      formData.append('file', fileInput.files[0]);
+
+      fetch('/upload', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          alert('Error: ' + data.error);
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred.');
+      });
+    });
+  });
+</script>
+
+
+  <script src="script/script.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
