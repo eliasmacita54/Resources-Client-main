@@ -6,56 +6,6 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
   <title>APP de Reserva de Recursos</title>
-  <style>
-    body {
-      background-color: #121212;
-      color: #ffffff;
-    }
-
-    .form-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      display: none;
-    }
-    #history-table{
-      color:#FFF;
-    }
-
-    .form-section.active {
-      display: flex;
-    }
-
-    .card {
-      background-color: #1f1f1f;
-      border: none;
-    }
-
-    .card-title {
-      color: #c0c0c0;
-    }
-
-    .form-group label {
-      color: #c0c0c0;
-    }
-
-    .form-control {
-      background-color: #343434;
-      border-color: #343434;
-      color: #fff;
-    }
-
-    .form-control:focus {
-      background-color: #454545;
-      border-color: #454545;
-      color: #ffffff;
-    }
-
-    .mt-5 {
-      margin-top: 50px;
-    }
-  </style>
 </head>
 <body>
   <div class="container mt-5" id="login-signup-form">
@@ -153,19 +103,10 @@
 
     <h2 class="mt-4">Criar Recursos</h2>
     <form id="create-resource-form">
-      <div class="form-group">
-        <label for="resource-name">Nome do Recurso:</label>
-        <input type="text" class="form-control" id="resource-name" required>
-      </div>
-      <button type="submit" class="btn btn-success">Criar</button>
-    </form>
-
-    <h2 class="mt-4">Upload de Arquivo</h2>
-    <form id="upload-file-form" enctype="multipart/form-data">
-      <div class="form-group">
-        <input type="file" id="file-input" name="file" class="form-control" required>
-      </div>
-      <button type="submit" class="btn btn-primary">Upload</button>
+      <label for="resource-name">Resource Name:</label>
+      <input type="text" id="resource-name" required>
+      <br>
+      <button type="submit">Criar</button>
     </form>
 
     <h3 class="mt-4">Historico</h3>
@@ -183,77 +124,7 @@
 
     <button id="logout-button" class="btn btn-danger">Sair</button>
   </div>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // Switch between forms
-    document.getElementById('show-signup').addEventListener('click', function () {
-      switchForm('signup-form');
-    });
-    document.getElementById('show-login').addEventListener('click', function () {
-      switchForm('login-form');
-    });
-    document.getElementById('show-password-reset').addEventListener('click', function () {
-      switchForm('password-reset-form');
-    });
 
-    // Handle password reset form submission
-    document.getElementById('password-reset-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      switchForm('verify-otp-form');
-    });
-
-    // Handle OTP verification form submission
-    document.getElementById('verify-otp-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      switchForm('reset-password-form');
-    });
-
-    // Example login success handler to show resource list
-    document.getElementById('login-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      document.getElementById('login-signup-form').style.display = 'none';
-      document.getElementById('resource-list').style.display = 'block';
-    });
-
-    function switchForm(formId) {
-      document.querySelectorAll('.form-section').forEach(function (form) {
-        form.classList.remove('active');
-      });
-      document.getElementById(formId).classList.add('active');
-    }
-
-    // Handle file upload
-    document.getElementById('upload-file-form').addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      const fileInput = document.getElementById('file-input');
-      const formData = new FormData();
-      formData.append('file', fileInput.files[0]);
-
-      fetch('/upload', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.error) {
-          alert('Error: ' + data.error);
-        } else {
-          alert(data.message);
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred.');
-      });
-    });
-  });
-</script>
-
-
-  <script src="script/script.js"></script>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="./script/script.js"></script>
 </body>
 </html>
